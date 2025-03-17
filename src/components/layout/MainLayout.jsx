@@ -94,17 +94,36 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
+// const ContentContainer = styled(Box)(({ theme, open, ismobile }) => ({
+//   flexGrow: 1,
+//   padding: theme.spacing(3),
+//   transition: theme.transitions.create('margin', {
+//     easing: theme.transitions.easing.sharp,
+//     duration: theme.transitions.duration.leavingScreen,
+//   }),
+//   marginTop: '64px',
+//   ...(open && !ismobile && {
+//     marginLeft: drawerWidth,
+//     transition: theme.transitions.create('margin', {
+//       easing: theme.transitions.easing.easeOut,
+//       duration: theme.transitions.duration.enteringScreen,
+//     }),
+//   }),
+// }));
+
 const ContentContainer = styled(Box)(({ theme, open, ismobile }) => ({
   flexGrow: 1,
   padding: theme.spacing(3),
-  transition: theme.transitions.create('margin', {
+  transition: theme.transitions.create(['margin', 'width'], {
     easing: theme.transitions.easing.sharp,
     duration: theme.transitions.duration.leavingScreen,
   }),
   marginTop: '64px',
+  width: '100%', // Add this to ensure full width
   ...(open && !ismobile && {
     marginLeft: drawerWidth,
-    transition: theme.transitions.create('margin', {
+    width: `calc(100% - ${drawerWidth}px)`, // This is critical - adjust width when drawer is open
+    transition: theme.transitions.create(['margin', 'width'], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
