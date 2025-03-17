@@ -16,8 +16,8 @@ import MainLayout from './components/layout/MainLayout';
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
-import RegisterParentPage from './pages/RegisterParent';
-import RegisterMentorPage from './pages/RegisterMentor';
+// import RegisterParentPage from './pages/RegisterParent';
+// import RegisterMentorPage from './pages/RegisterMentor';
 import DashboardPage from './pages/Dashboard';
 import ProfilePage from './pages/Profile';
 import ChallengesPage from './pages/Challenges';
@@ -28,8 +28,8 @@ import BadgesPage from './pages/Badges';
 import LeaderboardPage from './pages/Leaderboard';
 import ForumPage from './pages/Forum';
 import TopicPage from './pages/Topic';
-import MentorsPage from './pages/Mentors';
-import RoleModelsPage from './pages/RoleModels';
+// import MentorsPage from './pages/Mentors';
+// import RoleModelsPage from './pages/RoleModels';
 import NotFoundPage from './pages/NotFound';
 
 // Route guard component
@@ -52,8 +52,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            <Route path="/register/parent" element={<RegisterParentPage />} />
-            <Route path="/register/mentor" element={<RegisterMentorPage />} />
+            {/* <Route path="/register/parent" element={<RegisterParentPage />} />
+            <Route path="/register/mentor" element={<RegisterMentorPage />} /> */}
             
             {/* Protected routes */}
             <Route path="/app" element={
@@ -71,8 +71,8 @@ function App() {
               <Route path="leaderboard" element={<LeaderboardPage />} />
               <Route path="forum" element={<ForumPage />} />
               <Route path="forum/topics/:id" element={<TopicPage />} />
-              <Route path="mentors" element={<MentorsPage />} />
-              <Route path="role-models" element={<RoleModelsPage />} />
+              {/* <Route path="mentors" element={<MentorsPage />} />
+              <Route path="role-models" element={<RoleModelsPage />} /> */}
             </Route>
             
             {/* Catch-all route */}

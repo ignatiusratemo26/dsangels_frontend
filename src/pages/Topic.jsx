@@ -62,6 +62,8 @@ const PostCard = styled(Paper)(({ theme }) => ({
   }
 }));
 
+
+
 const TopicHeader = styled(Box)(({ theme }) => ({
   background: `linear-gradient(45deg, ${theme.palette.primary.dark} 0%, ${theme.palette.primary.main} 100%)`,
   color: theme.palette.primary.contrastText,

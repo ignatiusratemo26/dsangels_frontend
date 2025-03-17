@@ -46,9 +46,9 @@ import {
 import Loader from '../components/common/Loader/Loader';
 import ConceptVisualizer from '../components/learning/ConceptVisualizer';
 import QuizComponent from '../components/learning/QuizComponent';
-import InteractiveTutorial from '../components/learning/InteractiveTutorial/InteractiveTutorial';
-import CodeEditor from '../components/challenges/CodeEditor/CodeEditor';
-import ChallengeResult from '../components/challenges/ChallengeResult/ChallengeResult';
+import InteractiveTutorial from '../components/learning/InteractiveTutorial';
+import CodeEditor from '../components/challenges/CodeEditor';
+import ChallengeResult from '../components/challenges/ChallengeResult';
 
 // Services
 import { contentService } from '../services/contentService';
