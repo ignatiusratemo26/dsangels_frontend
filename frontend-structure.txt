@@ -1,0 +1,261 @@
+tech_girls_platform/frontend/
+├── public/
+│   ├── index.html                 # HTML entry point
+│   ├── favicon.ico                # Favicon
+│   ├── logo.svg                   # Logo file
+│   ├── manifest.json              # PWA manifest
+│   ├── robots.txt                 # SEO file
+│   └── assets/
+│       ├── images/
+│       │   ├── avatars/           # User avatar options
+│       │   │   ├── avatar1.png
+│       │   │   ├── avatar2.png
+│       │   │   └── ...
+│       │   ├── badges/            # Badge images
+│       │   │   ├── beginner.png
+│       │   │   ├── coder.png
+│       │   │   └── ...
+│       │   ├── characters/        # Guide/mascot characters
+│       │   │   ├── techgirl.png
+│       │   │   ├── robot.png
+│       │   │   └── ...
+│       │   ├── backgrounds/       # UI background images
+│       │   │   ├── space.png
+│       │   │   ├── rainbow.png
+│       │   │   └── ...
+│       │   └── illustrations/     # Learning illustrations
+│       │       ├── array.svg
+│       │       ├── loops.svg
+│       │       └── ...
+│       ├── sounds/                # Sound effects
+│       │   ├── success.mp3
+│       │   ├── error.mp3
+│       │   └── ...
+│       └── animations/            # Animation files
+│           ├── celebration.json
+│           ├── typing.json
+│           └── ...
+│
+├── src/
+│   ├── components/
+│   │   ├── common/
+│   │   │   ├── Button/
+│   │   │   │   ├── Button.jsx
+│   │   │   │   ├── Button.test.jsx
+│   │   │   │   └── Button.module.css
+│   │   │   ├── Card/
+│   │   │   │   ├── Card.jsx
+│   │   │   │   ├── Card.test.jsx
+│   │   │   │   └── Card.module.css
+│   │   │   ├── Avatar/
+│   │   │   │   ├── Avatar.jsx
+│   │   │   │   ├── Avatar.test.jsx
+│   │   │   │   └── Avatar.module.css
+│   │   │   ├── Badge/
+│   │   │   │   ├── Badge.jsx
+│   │   │   │   ├── Badge.test.jsx
+│   │   │   │   └── Badge.module.css
+│   │   │   ├── Input/
+│   │   │   │   ├── Input.jsx
+│   │   │   │   ├── Input.test.jsx
+│   │   │   │   └── Input.module.css
+│   │   │   ├── Modal/
+│   │   │   │   ├── Modal.jsx
+│   │   │   │   ├── Modal.test.jsx
+│   │   │   │   └── Modal.module.css
+│   │   │   ├── Loader/
+│   │   │   │   ├── Loader.jsx
+│   │   │   │   ├── Loader.test.jsx
+│   │   │   │   └── Loader.module.css
+│   │   │   ├── Tooltip/
+│   │   │   │   ├── Tooltip.jsx
+│   │   │   │   ├── Tooltip.test.jsx
+│   │   │   │   └── Tooltip.module.css
+│   │   │   ├── Toggle/
+│   │   │   │   ├── Toggle.jsx
+│   │   │   │   ├── Toggle.test.jsx
+│   │   │   │   └── Toggle.module.css
+│   │   │   ├── Dropdown/
+│   │   │   │   ├── Dropdown.jsx
+│   │   │   │   ├── Dropdown.test.jsx
+│   │   │   │   └── Dropdown.module.css
+│   │   │   ├── Accordion/
+│   │   │   │   ├── Accordion.jsx
+│   │   │   │   ├── Accordion.test.jsx
+│   │   │   │   └── Accordion.module.css
+│   │   │   └── index.js
+│   │   │
+│   │   ├── layout/
+│   │   │   ├── Header/
+│   │   │   │   ├── Header.jsx
+│   │   │   │   ├── Header.test.jsx
+│   │   │   │   └── Header.module.css
+│   │   │   ├── Footer/
+│   │   │   │   ├── Footer.jsx
+│   │   │   │   ├── Footer.test.jsx
+│   │   │   │   └── Footer.module.css
+│   │   │   ├── Sidebar/
+│   │   │   │   ├── Sidebar.jsx
+│   │   │   │   ├── Sidebar.test.jsx
+│   │   │   │   └── Sidebar.module.css
+│   │   │   ├── PageLayout/
+│   │   │   │   ├── PageLayout.jsx
+│   │   │   │   ├── PageLayout.test.jsx
+│   │   │   │   └── PageLayout.module.css
+│   │   │   ├── Navigation/
+│   │   │   │   ├── Navigation.jsx
+│   │   │   │   ├── Navigation.test.jsx
+│   │   │   │   └── Navigation.module.css
+│   │   │   └── index.js
+│   │   │
+│   │   ├── auth/
+│   │   │   ├── LoginForm/
+│   │   │   │   ├── LoginForm.jsx
+│   │   │   │   ├── LoginForm.test.jsx
+│   │   │   │   └── LoginForm.module.css
+│   │   │   ├── RegisterForm/
+│   │   │   │   ├── RegisterForm.jsx
+│   │   │   │   ├── RegisterForm.test.jsx
+│   │   │   │   └── RegisterForm.module.css
+│   │   │   ├── ParentApprovalForm/
+│   │   │   │   ├── ParentApprovalForm.jsx
+│   │   │   │   ├── ParentApprovalForm.test.jsx
+│   │   │   │   └── ParentApprovalForm.module.css
+│   │   │   ├── ForgotPasswordForm/
+│   │   │   │   ├── ForgotPasswordForm.jsx
+│   │   │   │   ├── ForgotPasswordForm.test.jsx
+│   │   │   │   └── ForgotPasswordForm.module.css
+│   │   │   ├── AvatarSelector/
+│   │   │   │   ├── AvatarSelector.jsx
+│   │   │   │   ├── AvatarSelector.test.jsx
+│   │   │   │   └── AvatarSelector.module.css
+│   │   │   └── index.js
+│   │   │
+│   │   ├── dashboard/
+│   │   │   ├── ProgressBar/
+│   │   │   │   ├── ProgressBar.jsx
+│   │   │   │   ├── ProgressBar.test.jsx
+│   │   │   │   └── ProgressBar.module.css
+│   │   │   ├── AchievementCard/
+│   │   │   │   ├── AchievementCard.jsx
+│   │   │   │   ├── AchievementCard.test.jsx
+│   │   │   │   └── AchievementCard.module.css
+│   │   │   ├── ActivityFeed/
+│   │   │   │   ├── ActivityFeed.jsx
+│   │   │   │   ├── ActivityFeed.test.jsx
+│   │   │   │   └── ActivityFeed.module.css
+│   │   │   ├── SkillChart/
+│   │   │   │   ├── SkillChart.jsx
+│   │   │   │   ├── SkillChart.test.jsx
+│   │   │   │   └── SkillChart.module.css
+│   │   │   ├── RecommendedChallenges/
+│   │   │   │   ├── RecommendedChallenges.jsx
+│   │   │   │   ├── RecommendedChallenges.test.jsx
+│   │   │   │   └── RecommendedChallenges.module.css
+│   │   │   ├── DashboardStats/
+│   │   │   │   ├── DashboardStats.jsx
+│   │   │   │   ├── DashboardStats.test.jsx
+│   │   │   │   └── DashboardStats.module.css
+│   │   │   └── index.js
+│   │   │
+│   │   ├── challenges/
+│   │   │   ├── ChallengeCard/
+│   │   │   │   ├── ChallengeCard.jsx
+│   │   │   │   ├── ChallengeCard.test.jsx
+│   │   │   │   └── ChallengeCard.module.css
+│   │   │   ├── ChallengeList/
+│   │   │   │   ├── ChallengeList.jsx
+│   │   │   │   ├── ChallengeList.test.jsx
+│   │   │   │   └── ChallengeList.module.css
+│   │   │   ├── ChallengeSolver/
+│   │   │   │   ├── ChallengeSolver.jsx
+│   │   │   │   ├── ChallengeSolver.test.jsx
+│   │   │   │   └── ChallengeSolver.module.css
+│   │   │   ├── CodeEditor/
+│   │   │   │   ├── CodeEditor.jsx
+│   │   │   │   ├── CodeEditor.test.jsx
+│   │   │   │   └── CodeEditor.module.css
+│   │   │   ├── HintSystem/
+│   │   │   │   ├── HintSystem.jsx
+│   │   │   │   ├── HintSystem.test.jsx
+│   │   │   │   └── HintSystem.module.css
+│   │   │   ├── ChallengeResult/
+│   │   │   │   ├── ChallengeResult.jsx
+│   │   │   │   ├── ChallengeResult.test.jsx
+│   │   │   │   └── ChallengeResult.module.css
+│   │   │   ├── ChallengeFilter/
+│   │   │   │   ├── ChallengeFilter.jsx
+│   │   │   │   ├── ChallengeFilter.test.jsx
+│   │   │   │   └── ChallengeFilter.module.css
+│   │   │   └── index.js
+│   │   │
+│   │   ├── learning/
+│   │   │   ├── ConceptCard/
+│   │   │   │   ├── ConceptCard.jsx
+│   │   │   │   ├── ConceptCard.test.jsx
+│   │   │   │   └── ConceptCard.module.css
+│   │   │   ├── ConceptList/
+│   │   │   │   ├── ConceptList.jsx
+│   │   │   │   ├── ConceptList.test.jsx
+│   │   │   │   └── ConceptList.module.css
+│   │   │   ├── ConceptVisualizer/
+│   │   │   │   ├── ConceptVisualizer.jsx
+│   │   │   │   ├── ConceptVisualizer.test.jsx
+│   │   │   │   └── ConceptVisualizer.module.css
+│   │   │   ├── InteractiveTutorial/
+│   │   │   │   ├── InteractiveTutorial.jsx
+│   │   │   │   ├── InteractiveTutorial.test.jsx
+│   │   │   │   └── InteractiveTutorial.module.css
+│   │   │   ├── QuizComponent/
+│   │   │   │   ├── QuizComponent.jsx
+│   │   │   │   ├── QuizComponent.test.jsx
+│   │   │   │   └── QuizComponent.module.css
+│   │   │   ├── LearningPath/
+│   │   │   │   ├── LearningPath.jsx
+│   │   │   │   ├── LearningPath.test.jsx
+│   │   │   │   └── LearningPath.module.css
+│   │   │   └── index.js
+│   │   │
+│   │   ├── gamification/
+│   │   │   ├── BadgeDisplay/
+│   │   │   │   ├── BadgeDisplay.jsx
+│   │   │   │   ├── BadgeDisplay.test.jsx
+│   │   │   │   └── BadgeDisplay.module.css
+│   │   │   ├── LeaderBoard/
+│   │   │   │   ├── LeaderBoard.jsx
+│   │   │   │   ├── LeaderBoard.test.jsx
+│   │   │   │   └── LeaderBoard.module.css
+│   │   │   ├── Reward/
+│   │   │   │   ├── Reward.jsx
+│   │   │   │   ├── Reward.test.jsx
+│   │   │   │   └── Reward.module.css
+│   │   │   ├── LevelUp/
+│   │   │   │   ├── LevelUp.jsx
+│   │   │   │   ├── LevelUp.test.jsx
+│   │   │   │   └── LevelUp.module.css
+│   │   │   ├── Celebration/
+│   │   │   │   ├── Celebration.jsx
+│   │   │   │   ├── Celebration.test.jsx
+│   │   │   │   └── Celebration.module.css
+│   │   │   ├── PointsCounter/
+│   │   │   │   ├── PointsCounter.jsx
+│   │   │   │   ├── PointsCounter.test.jsx
+│   │   │   │   └── PointsCounter.module.css
+│   │   │   └── index.js
+│   │   │
+│   │   ├── community/
+│   │   │   ├── Forum/
+│   │   │   │   ├── Forum.jsx
+│   │   │   │   ├── Forum.test.jsx
+│   │   │   │   └── Forum.module.css
+│   │   │   ├── ForumPost/
+│   │   │   │   ├── ForumPost.jsx
+│   │   │   │   ├── ForumPost.test.jsx
+│   │   │   │   └── ForumPost.module.css
+│   │   │   ├── Comment/
+│   │   │   │   ├── Comment.jsx
+│   │   │   │   ├── Comment.test.jsx
+│   │   │   │   └── Comment.module.css
+│   │   │   ├── RoleModelCard/
+│   │   │   │   ├── RoleModelCard.jsx
+│   │   
