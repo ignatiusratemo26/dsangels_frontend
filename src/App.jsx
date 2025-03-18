@@ -16,8 +16,8 @@ import MainLayout from './components/layout/MainLayout';
 import HomePage from './pages/Home';
 import LoginPage from './pages/Login';
 import RegisterPage from './pages/Register';
-// import RegisterParentPage from './pages/RegisterParent';
-// import RegisterMentorPage from './pages/RegisterMentor';
+import RegisterParentPage from './pages/RegisterParent';
+import RegisterMentorPage from './pages/RegisterMentor';
 import DashboardPage from './pages/Dashboard';
 import ProfilePage from './pages/Profile';
 import ChallengesPage from './pages/Challenges';
@@ -52,8 +52,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
-            {/* <Route path="/register/parent" element={<RegisterParentPage />} />
-            <Route path="/register/mentor" element={<RegisterMentorPage />} /> */}
+            <Route path="/register/parent" element={<RegisterParentPage />} />
+            <Route path="/register/mentor" element={<RegisterMentorPage />} />
             
             {/* Protected routes */}
             <Route path="/app" element={

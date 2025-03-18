@@ -59,14 +59,14 @@ class AuthService {
 
   /**
    * Log in a user
-   * @param {string} username - Username
+   * @param {string} email - User's email
    * @param {string} password - Password
    * @returns {Promise} - Promise with login response
    */
-  async login(username, password) {
+  async login(email, password) {
     try {
       const response = await axios.post(`${API_URL}/auth/login/`, {
-        username,
+        email,
         password,
       });
       

@@ -15,12 +15,12 @@ import {
   CircularProgress
 } from '@mui/material';
 import { styled } from '@mui/material/styles';
-import { Visibility, VisibilityOff } from '@mui/icons-material';
+import { Visibility, VisibilityOff, Email as EmailIcon } from '@mui/icons-material';
 
 // Auth context
 import { useAuth } from '../contexts/AuthContext';
 
-// Logo (replace with your actual logo import)
+// Logo
 import logo from '../assets/images/logo.png'; 
 
 const StyledPaper = styled(Paper)(({ theme }) => ({
@@ -42,7 +42,7 @@ const LoginPage = () => {
   const location = useLocation();
   const { login } = useAuth();
   
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false);
   const [error, setError] = useState('');
@@ -54,8 +54,15 @@ const LoginPage = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!username || !password) {
-      setError('Please enter both username and password');
+    if (!email || !password) {
+      setError('Please enter both email and password');
+      return;
+    }
+    
+    // Simple email validation
+    const emailRegex = /\S+@\S+\.\S+/;
+    if (!emailRegex.test(email)) {
+      setError('Please enter a valid email address');
       return;
     }
     
@@ -63,7 +70,7 @@ const LoginPage = () => {
       setError('');
       setIsLoading(true);
       
-      await login(username, password);
+      await login(email, password);
       navigate(from, { replace: true });
     } catch (err) {
       console.error('Login error:', err);
@@ -71,7 +78,7 @@ const LoginPage = () => {
       if (err.response) {
         // Handle different error status codes
         if (err.response.status === 401) {
-          setError('Invalid username or password. Please try again.');
+          setError('Invalid email or password. Please try again.');
         } else if (err.response.data?.detail) {
           setError(err.response.data.detail);
         } else {
@@ -124,14 +131,21 @@ const LoginPage = () => {
               margin="normal"
               required
               fullWidth
-              id="username"
-              label="Username"
-              name="username"
-              autoComplete="username"
+              id="email"
+              label="Email Address"
+              name="email"
+              autoComplete="email"
               autoFocus
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
               disabled={isLoading}
+              InputProps={{
+                startAdornment: (
+                  <InputAdornment position="start">
+                    <EmailIcon />
+                  </InputAdornment>
+                ),
+              }}
             />
             
             <TextField

@@ -19,14 +19,14 @@ export const AuthProvider = ({ children }) => {
       if (token) {
         try {
           // Get user profile with token
-          const userData = await AuthService.getProfile();
+          const userData = await AuthService.getUserProfile();
           setUser(userData);
         } catch (err) {
           // If access token expired, try to refresh
           if (refreshToken) {
             try {
               await refreshAccessToken(refreshToken);
-              const userData = await AuthService.getProfile();
+              const userData = await AuthService.getUserProfile();
               setUser(userData);
             } catch (refreshErr) {
               console.error("Failed to refresh token:", refreshErr);
@@ -56,15 +56,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const login = async (username, password) => {
+  const login = async (email, password) => {
     try {
       setError(null);
-      const response = await AuthService.login(username, password);
+      const response = await AuthService.login(email, password);
       
       localStorage.setItem('access_token', response.access);
       localStorage.setItem('refresh_token', response.refresh);
       
-      const userData = response.user || await AuthService.getProfile();
+      const userData = response.user || await AuthService.getUserProfile();
       setUser(userData);
       
       return userData;
