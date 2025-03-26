@@ -51,15 +51,15 @@ class CommunityService {
   
   /**
    * Get a specific forum topic by ID
-   * @param {number} topicId - ID of the topic to fetch
+   * @param {number} id - ID of the topic to fetch
    * @returns {Promise} - Promise with topic data
    */
-  async getTopicById(topicId) {
+  async getTopicById(id) {
     try {
-      const response = await apiClient.get(`/api/community/topics/${topicId}/`);
+      const response = await apiClient.get(`/api/community/topics/${id}/`);
       return response.data;
     } catch (error) {
-      console.error(`Error fetching topic ${topicId}:`, error);
+      console.error(`Error fetching topic ${id}:`, error);
       throw error;
     }
   }

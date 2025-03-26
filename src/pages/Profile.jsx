@@ -232,11 +232,11 @@ const ProfilePage = () => {
         
         // Mock stats data
         setStats({
-          completed_challenges: 15,
+          completed_challenges: 1,
           in_progress_challenges: 3,
-          total_points: 2540,
-          badges_earned: 8,
-          rank: 42,
+          total_points: 120,
+          badges_earned: 1,
+          rank: 3,
           joined_days: 35,
           streak_days: 7
         });

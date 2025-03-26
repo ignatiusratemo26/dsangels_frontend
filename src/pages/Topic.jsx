@@ -82,7 +82,9 @@ const UserAvatar = styled(Avatar)(({ theme }) => ({
 }));
 
 const TopicPage = () => {
-  const { topicId } = useParams();
+
+  const { id } = useParams();
+  const topicId = id;
   const navigate = useNavigate();
   const { user } = useAuth();
   
@@ -103,11 +105,13 @@ const TopicPage = () => {
   const [editingTopic, setEditingTopic] = useState(false);
   const [editTopicTitle, setEditTopicTitle] = useState('');
   const [editTopicDescription, setEditTopicDescription] = useState('');
-  
+
   const pageSize = 10;
   
+
   // Fetch topic and posts
   useEffect(() => {
+
     const fetchTopicAndPosts = async () => {
       setLoading(true);
       setError(null);
