@@ -121,7 +121,8 @@ const RelatedConceptCard = styled(Card)(({ theme }) => ({
 }));
 
 const ConceptPage = () => {
-  const { conceptId } = useParams();
+  const params = useParams();  
+  const conceptId = params.id;
   const [concept, setConcept] = useState(null);
   const [relatedConcepts, setRelatedConcepts] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -139,7 +140,6 @@ const ConceptPage = () => {
       
       try {
         // Get concept details
-        console.log(conceptId)
         const conceptData = await contentService.getConceptNote(conceptId);
         setConcept(conceptData);
         
