@@ -136,7 +136,8 @@ const ChallengesPage = () => {
   
   // Transform difficulty number to readable text
   const getDifficultyText = (level) => {
-    const difficulty = difficultyLevels.find(d => d.value === level);
+    const numLevel = typeof level === 'string' ? parseInt(level, 10) : level;
+    const difficulty = difficultyLevels.find(d => d.value === numLevel);
     return difficulty ? difficulty.label : 'Unknown';
   };
   
@@ -358,8 +359,8 @@ const ChallengesPage = () => {
                   <Grid item key={challenge.id} xs={12} sm={6} md={4}>
                     <StyledCard>
                       <DifficultyChip 
-                        label={getDifficultyText(challenge.difficulty)} 
-                        difficulty={challenge.difficulty}
+                        label={getDifficultyText(challenge.difficulty_level)} 
+                        difficulty={challenge.difficulty_level}
                       />
                       
                       <CardMedia

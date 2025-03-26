@@ -1,3 +1,5 @@
+import Editor from '@monaco-editor/react';
+
 import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
@@ -36,13 +38,6 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import EmojiEventsIcon from '@mui/icons-material/EmojiEvents';
 import SendIcon from '@mui/icons-material/Send';
-
-// Code editor component (you might use a library like react-ace or CodeMirror)
-import AceEditor from 'react-ace';
-import 'ace-builds/src-noconflict/mode-javascript';
-import 'ace-builds/src-noconflict/mode-python';
-import 'ace-builds/src-noconflict/theme-xcode';
-import 'ace-builds/src-noconflict/theme-pastel_on_dark';
 
 // Services
 import challengeService from '../services/challengeService';
@@ -128,7 +123,7 @@ const ChallengePage = () => {
   const [completionData, setCompletionData] = useState(null);
   
   // Theme for the code editor
-  const [editorTheme, setEditorTheme] = useState('xcode');
+  const [editorTheme, setEditorTheme] = useState('light');
   
   // Load challenge data
   useEffect(() => {
@@ -137,7 +132,7 @@ const ChallengePage = () => {
       setError(null);
       
       try {
-        const data = await challengeService.getChallengeById(id);
+        const data = await challengeService.getChallenge(id);
         setChallenge(data);
         
         // Set initial code based on starter template
@@ -161,8 +156,8 @@ const ChallengePage = () => {
     fetchChallenge();
   }, [id]);
   
-  const handleCodeChange = (newCode) => {
-    setCode(newCode);
+  const handleCodeChange = (value) => {
+    setCode(value);
   };
   
   const handleRun = async () => {
@@ -195,7 +190,7 @@ const ChallengePage = () => {
         setCompletionData(result);
         setCompletionDialog(true);
         
-        // Check for new badges (this would typically be handled by your backend)
+        // Check for new badges
         gamificationService.checkForNewBadges();
       } else {
         setOutput('Challenge submission failed: ' + (result.message || 'Some tests did not pass.'));
@@ -210,15 +205,16 @@ const ChallengePage = () => {
   
   const handleShowHint = (index) => {
     if (challenge && challenge.hints && challenge.hints[index]) {
-      setCurrentHint(challenge.hints[index]);
+      // Handle both string hints and object hints
+      const hint = challenge.hints[index];
+      const hintText = typeof hint === 'object' ? hint.hint_text : hint;
+      
+      setCurrentHint(hintText);
       setHintDialogOpen(true);
       
       // Mark this hint as used if it's not already
       if (!hintsUsed.includes(index)) {
         setHintsUsed([...hintsUsed, index]);
-        
-        // In a real app, you'd want to track this on the backend
-        // challengeService.trackHintUsage(challenge.id, index);
       }
     }
   };
@@ -229,6 +225,11 @@ const ChallengePage = () => {
   
   const handleBackStep = () => {
     setActiveStep((prevStep) => Math.max(0, prevStep - 1));
+  };
+  
+  // Convert Ace themes to Monaco themes
+  const getMonacoTheme = () => {
+    return editorTheme === 'pastel_on_dark' ? 'vs-dark' : 'light';
   };
   
   if (isLoading) {
@@ -305,9 +306,9 @@ const ChallengePage = () => {
             </Typography>
             <Box sx={{ display: 'flex', gap: 1, flexWrap: 'wrap' }}>
               <DifficultyChip 
-                label={`Level ${challenge.difficulty}`} 
+                label={`Level ${challenge.difficulty_level}`} 
                 icon={<CodeIcon />} 
-                difficulty={challenge.difficulty}
+                difficulty={challenge.difficulty_level}
               />
               {challenge.tags && challenge.tags.map(tag => (
                 <Chip 
@@ -385,7 +386,7 @@ const ChallengePage = () => {
                     Instructions
                   </Typography>
                   <Typography variant="body2" paragraph>
-                    {challenge.instructions}
+                    {challenge.problem_statement  || "No instructions provided."}
                   </Typography>
                   
                   <Divider sx={{ my: 2 }} />
@@ -395,20 +396,25 @@ const ChallengePage = () => {
                     Hints
                   </Typography>
                   
-                  {challenge.hints && challenge.hints.map((hint, index) => (
-                    <HintButton
-                      key={index}
-                      variant={hintsUsed.includes(index) ? "outlined" : "contained"}
-                      color={hintsUsed.includes(index) ? "secondary" : "primary"}
-                      size="small"
-                      startIcon={<LightbulbIcon />}
-                      onClick={() => handleShowHint(index)}
-                      fullWidth
-                      sx={{ mb: 1 }}
-                    >
-                      {hintsUsed.includes(index) ? `Hint ${index + 1} (Used)` : `Get Hint ${index + 1}`}
-                    </HintButton>
-                  ))}
+                  {challenge.hints && challenge.hints.map((hint, index) => {
+                      // Handle both string hints and object hints
+                      const hintText = typeof hint === 'object' ? hint.hint_text : hint;
+                      
+                      return (
+                        <HintButton
+                          key={index}
+                          variant={hintsUsed.includes(index) ? "outlined" : "contained"}
+                          color={hintsUsed.includes(index) ? "secondary" : "primary"}
+                          size="small"
+                          startIcon={<LightbulbIcon />}
+                          onClick={() => handleShowHint(index)}
+                          fullWidth
+                          sx={{ mb: 1 }}
+                        >
+                          {hintsUsed.includes(index) ? `Hint ${index + 1} (Used)` : `Get Hint ${index + 1}`}
+                        </HintButton>
+                      );
+                    })}
                   
                   {challenge.hints && challenge.hints.length === 0 && (
                     <Typography variant="body2" color="text.secondary">
@@ -429,26 +435,28 @@ const ChallengePage = () => {
             </Typography>
             
             <EditorContainer>
-              <AceEditor
-                mode={codeLanguage}
-                theme={editorTheme}
-                name="code-editor"
+              {/* Replace AceEditor with Monaco Editor */}
+              <Editor
+                height="100%"
+                width="100%"
+                language={codeLanguage}
                 value={code}
                 onChange={handleCodeChange}
-                fontSize={14}
-                width="100%"
-                height="100%"
-                showPrintMargin={false}
-                showGutter={true}
-                highlightActiveLine={true}
-                readOnly={activeStep === 0}
-                setOptions={{
-                  enableBasicAutocompletion: true,
-                  enableLiveAutocompletion: true,
-                  enableSnippets: true,
-                  showLineNumbers: true,
-                  tabSize: 2
+                theme={getMonacoTheme()}
+                options={{
+                  readOnly: activeStep === 0,
+                  minimap: { enabled: false },
+                  fontSize: 14,
+                  scrollBeyondLastLine: false,
+                  automaticLayout: true,
+                  tabSize: 2,
+                  suggestOnTriggerCharacters: true
                 }}
+                loading={
+                  <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100%' }}>
+                    <CircularProgress size={30} />
+                  </Box>
+                }
               />
             </EditorContainer>
           </Box>
