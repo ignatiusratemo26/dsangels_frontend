@@ -31,6 +31,8 @@ import TopicPage from './pages/Topic';
 // import MentorsPage from './pages/Mentors';
 // import RoleModelsPage from './pages/RoleModels';
 import NotFoundPage from './pages/NotFound';
+import ChatPage from './pages/ChatPage';
+import PublicLayout from './components/layout/PublicLayout';
 
 // Route guard component
 const ProtectedRoute = ({ children }) => {
@@ -49,11 +51,18 @@ function App() {
         <AuthProvider>
           <Routes>
             {/* Public routes */}
-            <Route path="/" element={<HomePage />} />
+            {/* <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<LoginPage />} />
             <Route path="/register" element={<RegisterPage />} />
             <Route path="/register/parent" element={<RegisterParentPage />} />
-            <Route path="/register/mentor" element={<RegisterMentorPage />} />
+            <Route path="/register/mentor" element={<RegisterMentorPage />} /> */}
+
+
+            <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
+<Route path="/login" element={<PublicLayout><LoginPage /></PublicLayout>} />
+<Route path="/register" element={<PublicLayout><RegisterPage /></PublicLayout>} />
+<Route path="/register/parent" element={<PublicLayout><RegisterParentPage /></PublicLayout>} />
+<Route path="/register/mentor" element={<PublicLayout><RegisterMentorPage /></PublicLayout>} />
             
             {/* Protected routes */}
             <Route path="/app" element={
@@ -71,6 +80,7 @@ function App() {
               <Route path="leaderboard" element={<LeaderboardPage />} />
               <Route path="forum" element={<ForumPage />} />
               <Route path="forum/topics/:id" element={<TopicPage />} />
+              <Route path="chat" element={<ChatPage />} />
               {/* <Route path="mentors" element={<MentorsPage />} />
               <Route path="role-models" element={<RoleModelsPage />} /> */}
             </Route>

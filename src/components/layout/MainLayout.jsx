@@ -21,7 +21,9 @@ import {
 } from '@mui/material';
 import { styled, useTheme } from '@mui/material/styles';
 
+import ChatBot from '../chat/ChatBot';
 // Icons
+import SmartToyIcon from '@mui/icons-material/SmartToy';
 import MenuIcon from '@mui/icons-material/Menu';
 import DashboardIcon from '@mui/icons-material/Dashboard';
 import CodeIcon from '@mui/icons-material/Code';
@@ -94,22 +96,7 @@ const StyledBadge = styled(Badge)(({ theme }) => ({
   },
 }));
 
-// const ContentContainer = styled(Box)(({ theme, open, ismobile }) => ({
-//   flexGrow: 1,
-//   padding: theme.spacing(3),
-//   transition: theme.transitions.create('margin', {
-//     easing: theme.transitions.easing.sharp,
-//     duration: theme.transitions.duration.leavingScreen,
-//   }),
-//   marginTop: '64px',
-//   ...(open && !ismobile && {
-//     marginLeft: drawerWidth,
-//     transition: theme.transitions.create('margin', {
-//       easing: theme.transitions.easing.easeOut,
-//       duration: theme.transitions.duration.enteringScreen,
-//     }),
-//   }),
-// }));
+
 
 const ContentContainer = styled(Box)(({ theme, open, ismobile }) => ({
   flexGrow: 1,
@@ -204,6 +191,8 @@ const MainLayout = () => {
     { text: 'Forum', icon: <ForumIcon />, path: '/app/forum' },
     { text: 'Mentors', icon: <PeopleIcon />, path: '/app/mentors' },
     { text: 'Role Models', icon: <PersonIcon />, path: '/app/role-models' },
+    { text: 'Chat with Mowgli', icon: <SmartToyIcon />, path: '/app/chat', highlight: true },
+
   ];
 
   return (
@@ -365,6 +354,7 @@ const MainLayout = () => {
       <ContentContainer open={open} ismobile={isMobile ? 1 : 0}>
         <Outlet />
       </ContentContainer>
+      <ChatBot />
     </MainContainer>
   );
 };

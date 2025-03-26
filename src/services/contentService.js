@@ -119,6 +119,37 @@ export const contentService = {
       throw error;
     }
   },
+
+  // Add this method to the contentService object
+async getCategories() {
+  try {
+    const response = await apiClient.get('/api/content/categories/');
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching categories:', error);
+    
+    // Return mock data for development
+    if (process.env.NODE_ENV === 'development') {
+      return {
+        count: 6,
+        next: null,
+        previous: null,
+        results: [
+          { id: 1, name: 'Programming Basics', description: 'Fundamental programming concepts' },
+          { id: 2, name: 'Web Development', description: 'HTML, CSS, and web technologies' },
+          { id: 3, name: 'Data Science', description: 'Working with data and analytics' },
+          { id: 4, name: 'Algorithms', description: 'Problem solving and algorithms' },
+          { id: 5, name: 'Robotics', description: 'Building and programming robots' },
+          { id: 6, name: 'Game Development', description: 'Creating games and interactive experiences' }
+        ]
+      };
+    }
+    
+    // If not in development, return an empty result set
+    return { results: [] };
+  }
+},
+
   // Add this method to the contentService object
   async getConceptTutorial(conceptId) {
     try {

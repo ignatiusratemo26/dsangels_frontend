@@ -57,7 +57,7 @@ const RegisterPage = () => {
   const [formData, setFormData] = useState({
     username: '',
     email: '',
-    display_name: '',
+    name: '',
     password: '',
     password2: '',
     date_of_birth: '',
@@ -239,13 +239,13 @@ const RegisterPage = () => {
               margin="normal"
               required
               fullWidth
-              id="display_name"
+              id="name"
               label="Display Name"
-              name="display_name"
-              value={formData.display_name}
+              name="name"
+              value={formData.name}
               onChange={handleInputChange}
-              error={!!errors.display_name}
-              helperText={errors.display_name}
+              error={!!errors.name}
+              helperText={errors.name}
               disabled={isLoading}
             />
           </>

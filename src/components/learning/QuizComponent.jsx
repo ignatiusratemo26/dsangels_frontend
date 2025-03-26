@@ -329,8 +329,9 @@ const QuizComponent = ({ quiz, onComplete }) => {
             
             <FormControl component="fieldset" sx={{ width: '100%' }}>
               <RadioGroup 
-                value={selectedAnswers[currentQuestion] !== null ? selectedAnswers[currentQuestion].toString() : ''} 
-                onChange={(e) => handleAnswerSelect(e.target.value)}
+                  value={selectedAnswers[currentQuestion] !== null && selectedAnswers[currentQuestion] !== undefined ? 
+  selectedAnswers[currentQuestion].toString() : ''} 
+                  onChange={(e) => handleAnswerSelect(e.target.value)}
               >
                 {quiz[currentQuestion].options.map((option, optionIndex) => (
                   <Paper 

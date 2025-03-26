@@ -88,7 +88,7 @@ const RegisterParentPage = () => {
     // Parent info
     username: '',
     email: '',
-    display_name: '',
+    name: '',
     password: '',
     password2: '',
     
@@ -139,8 +139,8 @@ const RegisterParentPage = () => {
         isValid = false;
       }
       
-      if (!formData.display_name.trim()) {
-        newErrors.display_name = 'Display name is required';
+      if (!formData.name.trim()) {
+        newErrors.name = 'Display name is required';
         isValid = false;
       }
     } else if (step === 1) {
@@ -208,7 +208,18 @@ const RegisterParentPage = () => {
       
       // Convert age_group from string to integer
       const parentData = {
-        ...formData,
+        // ...formData,
+        // child_age_group: parseInt(formData.child_age_group)
+        user: {
+          username: formData.cchild_username,
+          email: formData.email,
+          name: formData.name,
+          password: formData.password,
+          password2: formData.password2,
+        },
+        // Child data
+        child_username: formData.child_username,
+        child_email: formData.child_email || formData.email, // Use parent email as fallback
         child_age_group: parseInt(formData.child_age_group)
       };
       
@@ -299,13 +310,13 @@ const RegisterParentPage = () => {
               margin="normal"
               required
               fullWidth
-              id="display_name"
+              id="name"
               label="Parent Display Name"
-              name="display_name"
-              value={formData.display_name}
+              name="name"
+              value={formData.name}
               onChange={handleInputChange}
-              error={!!errors.display_name}
-              helperText={errors.display_name}
+              error={!!errors.name}
+              helperText={errors.name}
               disabled={isLoading}
             />
           </>

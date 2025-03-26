@@ -72,6 +72,7 @@ const girlsTechTheme = createTheme({
     borderRadius: 12,
   },
   components: {
+    
     MuiButton: {
       styleOverrides: {
         root: {
