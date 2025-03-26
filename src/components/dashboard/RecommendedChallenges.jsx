@@ -153,7 +153,11 @@ const RecommendedChallenges = ({ challenges, concepts }) => {
                 {concept.concept}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {concept.content.substring(0, 120)}...
+                {/* {concept.content.substring(0, 120)}... */}
+                {concept.content 
+                    ? concept.content.substring(0, 120) + '...' 
+                    : 'No content preview available'}
+
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
                 <Typography variant="caption" sx={{ color: theme.palette.text.secondary }}>

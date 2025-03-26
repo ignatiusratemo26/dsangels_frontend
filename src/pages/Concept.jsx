@@ -139,7 +139,8 @@ const ConceptPage = () => {
       
       try {
         // Get concept details
-        const conceptData = await contentService.getConceptById(conceptId);
+        console.log(conceptId)
+        const conceptData = await contentService.getConceptNote(conceptId);
         setConcept(conceptData);
         
         // Get related concepts
