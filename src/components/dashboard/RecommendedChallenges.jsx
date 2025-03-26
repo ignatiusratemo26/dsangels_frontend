@@ -88,7 +88,7 @@ const RecommendedChallenges = ({ challenges, concepts }) => {
                 {challenge.title}
               </Typography>
               <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                {challenge.problem_statement.substring(0, 100)}...
+                {challenge.problem_statement ? challenge.problem_statement.substring(0, 100) + "..." : "No description available"}
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
                 <Typography 
@@ -101,7 +101,7 @@ const RecommendedChallenges = ({ challenges, concepts }) => {
                     borderRadius: 1
                   }}
                 >
-                  Difficulty: {challenge.difficulty_base}/5
+                  Difficulty: {challenge.difficulty_level}/5
                 </Typography>
                 <Typography 
                   variant="caption" 
@@ -153,7 +153,8 @@ const RecommendedChallenges = ({ challenges, concepts }) => {
                 {concept.concept}
               </Typography>
               <Typography variant="body2" color="text.secondary">
-                {concept.content.substring(0, 120)}...
+              {/* {concept.content ? concept.content.substring(0, 120) + "..." : "No content available"} */}
+              {concept.theme_description || concept.explanation || "No content available"}
               </Typography>
               <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
                 <Typography variant="caption" sx={{ color: theme.palette.text.secondary }}>
