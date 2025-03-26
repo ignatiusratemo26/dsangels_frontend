@@ -361,13 +361,20 @@ const ChallengesPage = () => {
                         label={getDifficultyText(challenge.difficulty)} 
                         difficulty={challenge.difficulty}
                       />
-                      
+
                       <CardMedia
+                    component="img"
+                    image={challenge.image_url}
+                    alt={challenge.title}
+                    sx={{ height: 300, width: 500, margin: '0 auto', objectFit: 'fit' }}
+                  />
+                      
+                      {/* <CardMedia
                         component="img"
                         height="140"
                         image={challenge.image_url || `https://source.unsplash.com/random/300x200?coding&sig=${challenge.id}`}
                         alt={challenge.title}
-                      />
+                      /> */}
                       
                       <CardContent sx={{ flexGrow: 1 }}>
                         <Typography variant="h5" component="h2" gutterBottom>
