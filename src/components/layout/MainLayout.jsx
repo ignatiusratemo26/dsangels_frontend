@@ -37,6 +37,7 @@ import LogoutIcon from '@mui/icons-material/Logout';
 import NotificationsIcon from '@mui/icons-material/Notifications';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import AuthService from '../../services/authService';
+import { useAuth } from '../../contexts/AuthContext';
 
 // Logo
 import logo from '../../assets/images/logo.png';
@@ -118,6 +119,7 @@ const ContentContainer = styled(Box)(({ theme, open, ismobile }) => ({
 }));
 
 const MainLayout = () => {
+  const { user, userType, isParent, isMentor } = useAuth();
   const theme = useTheme();
   const navigate = useNavigate();
   const location = useLocation();

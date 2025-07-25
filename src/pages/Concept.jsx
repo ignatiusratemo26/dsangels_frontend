@@ -411,9 +411,11 @@ const ConceptPage = () => {
         </Tabs>
         
         {/* Learn Tab */}
-        <TabPanel value={tabValue} index={0}>
+        {/* <TabPanel value={tabValue} index={0}>
           <Box sx={{ p: 3 }}>
-            <div dangerouslySetInnerHTML={{ __html: conceptData.content }} />
+            <div dangerouslySetInnerHTML={{ __html: conceptData.explanation }} />
+
+            <div dangerouslySetInnerHTML={{ __html: conceptData.theme_description }} />
             
             {conceptData.interactive_elements?.visualizations && (
               <Box sx={{ mt: 4, mb: 2 }}>
@@ -433,8 +435,51 @@ const ConceptPage = () => {
                   <ConceptVisualizer concept={conceptData} />
                 </Paper>
               </Box>
-            )}
-            
+            )} */}
+          <TabPanel value={tabValue} index={0}>
+            <Box sx={{ p: 3 }}>
+              {conceptData.explanation && (
+                <Box sx={{ mb: 4 }}>
+                  <Typography variant="h6" gutterBottom>
+                    Explanation
+                  </Typography>
+                  <Typography variant="body1">
+                    {conceptData.explanation}
+                  </Typography>
+                </Box>
+              )}
+
+              {conceptData.theme_description && (
+                <Box sx={{ mb: 4 }}>
+                  <Typography variant="h6" gutterBottom>
+                    Theme
+                  </Typography>
+                  <Typography variant="body1">
+                    {conceptData.theme_description}
+                  </Typography>
+                </Box>
+              )}
+              
+              {conceptData.visual_aids && (
+                <Box sx={{ mt: 4, mb: 2 }}>
+                  <Typography variant="h6" gutterBottom>
+                    Visual Representation
+                  </Typography>
+                  <Paper 
+                    elevation={0} 
+                    sx={{ 
+                      p: 3, 
+                      bgcolor: 'background.default', 
+                      borderRadius: 2,
+                      border: '1px solid',
+                      borderColor: 'divider'
+                    }}
+                  >
+                    <ConceptVisualizer concept={conceptData} />
+                  </Paper>
+                </Box>
+              )}
+                      
             <Box sx={{ mt: 4 }}>
               <Typography variant="h6" gutterBottom>
                 Key Points

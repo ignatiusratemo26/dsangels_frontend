@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { Box, Typography, Button, ButtonGroup, Slider, Paper, Alert } from '@mui/material';
+import { Box, Typography, Button, ButtonGroup, Slider, Paper, Alert, Grid } from '@mui/material';
 import { styled } from '@mui/material/styles';
 import { 
   PlayArrow as PlayIcon, 
@@ -80,6 +80,32 @@ const VariableBox = styled(Paper)(({ theme, varType }) => {
   };
 });
 
+const GridCell = styled(Box)(({ theme, isStart, isGoal, isObstacle, isHighlighted }) => {
+  let bgColor = 'transparent';
+  
+  if (isStart) bgColor = theme.palette.primary.light + '40'; // Transparent version
+  if (isGoal) bgColor = theme.palette.success.light + '40';
+  if (isObstacle) bgColor = theme.palette.error.light + '40';
+  if (isHighlighted) bgColor = theme.palette.secondary.light + '40';
+  
+  return {
+    width: 48,
+    height: 48,
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    fontSize: '24px',
+    border: '1px solid',
+    borderColor: theme.palette.divider,
+    backgroundColor: bgColor,
+    borderRadius: theme.shape.borderRadius / 2,
+    transition: 'transform 0.2s, background-color 0.2s',
+    '&:hover': {
+      transform: 'scale(1.05)',
+    }
+  };
+});
+
 const InfoBox = styled(Box)(({ theme }) => ({
   position: 'absolute',
   bottom: theme.spacing(1),
@@ -105,6 +131,50 @@ const ConceptVisualizer = ({ concept }) => {
   const [speed, setSpeed] = useState(1.0);
   const [zoom, setZoom] = useState(1.0);
   const animationRef = useRef(null);
+  const [visualizationType, setVisualizationType] = useState('standard');
+
+  // Check for grid visualization
+  useEffect(() => {
+    if (concept?.visual_aids?.grid) {
+      setVisualizationType('grid');
+    } else {
+      setVisualizationType('standard');
+    }
+  }, [concept]);
+
+  // Grid-specific state
+  const [gridHighlight, setGridHighlight] = useState([]);
+  const [gridStep, setGridStep] = useState(0);
+  const [gridSteps, setGridSteps] = useState([]);
+  const [gridMessage, setGridMessage] = useState('');
+
+  // Initialize grid path steps if in grid visualization mode
+  useEffect(() => {
+    if (visualizationType === 'grid' && concept?.visual_aids?.path) {
+      setGridSteps(concept.visual_aids.path || []);
+      setGridMessage(concept.visual_aids.message || 'Follow the path to reach the goal!');
+    }
+  }, [visualizationType, concept]);
+
+  // Handle grid animation
+  useEffect(() => {
+    if (isPlaying && visualizationType === 'grid') {
+      animationRef.current = setTimeout(() => {
+        if (gridStep < gridSteps.length - 1) {
+          setGridStep(prevStep => prevStep + 1);
+          setGridHighlight(gridSteps[gridStep + 1]);
+        } else {
+          setIsPlaying(false);
+        }
+      }, 1000 / speed);
+    }
+    
+    return () => {
+      if (animationRef.current) {
+        clearTimeout(animationRef.current);
+      }
+    };
+  }, [isPlaying, gridStep, gridSteps.length, speed, visualizationType]);
 
   // Determine visualization type based on concept
   const getVisualizationData = () => {
@@ -238,6 +308,8 @@ const ConceptVisualizer = ({ concept }) => {
   // Handle restart
   const restartAnimation = () => {
     setCurrentStep(0);
+    setGridStep(0);
+    setGridHighlight([]);
     setIsPlaying(false);
   };
   
@@ -251,9 +323,9 @@ const ConceptVisualizer = ({ concept }) => {
     setZoom(newValue);
   };
   
-  // Animation loop
+  // Animation loop for standard visualization
   useEffect(() => {
-    if (isPlaying) {
+    if (isPlaying && visualizationType === 'standard') {
       animationRef.current = setTimeout(() => {
         if (currentStep < totalSteps - 1) {
           setCurrentStep(prevStep => prevStep + 1);
@@ -268,13 +340,88 @@ const ConceptVisualizer = ({ concept }) => {
         clearTimeout(animationRef.current);
       }
     };
-  }, [isPlaying, currentStep, totalSteps, speed]);
+  }, [isPlaying, currentStep, totalSteps, speed, visualizationType]);
   
   const currentStepData = visualizationData.steps[currentStep] || { message: "", variables: {} };
   
-  return (
-    <VisualizerContainer>
-      <VisualCanvas sx={{ transform: `scale(${zoom})`, transition: 'transform 0.3s ease' }}>
+  // Render grid visualization
+  const renderGridVisualization = () => {
+    const { grid, start, goal } = concept.visual_aids;
+    
+    if (!grid || !grid.length) {
+      return (
+        <Typography variant="body1" color="text.secondary">
+          Grid data not available for this visualization.
+        </Typography>
+      );
+    }
+    
+    return (
+      <Box sx={{ 
+        display: 'flex', 
+        flexDirection: 'column',
+        alignItems: 'center',
+        height: '100%',
+        justifyContent: 'center',
+        p: 2
+      }}>
+        <Typography variant="subtitle1" gutterBottom>
+          {gridMessage}
+        </Typography>
+        
+        <Box sx={{ 
+          display: 'grid',
+          gridTemplateColumns: `repeat(${grid[0].length}, 48px)`,
+          gap: 1,
+          justifyContent: 'center'
+        }}>
+          {grid.map((row, rowIndex) => (
+            row.map((cell, colIndex) => {
+              const isStart = start && start[0] === rowIndex && start[1] === colIndex;
+              const isGoal = goal && goal[0] === rowIndex && goal[1] === colIndex;
+              const isHighlighted = gridHighlight && 
+                gridHighlight.length === 2 && 
+                gridHighlight[0] === rowIndex && 
+                gridHighlight[1] === colIndex;
+              const isObstacle = cell === '🌳' || cell === '🧱' || cell === '🌊';
+              
+              return (
+                <GridCell 
+                  key={`${rowIndex}-${colIndex}`}
+                  isStart={isStart}
+                  isGoal={isGoal}
+                  isObstacle={isObstacle}
+                  isHighlighted={isHighlighted}
+                >
+                  {cell}
+                </GridCell>
+              );
+            })
+          ))}
+        </Box>
+        
+        <Box sx={{ mt: 3, display: 'flex', flexDirection: 'column', gap: 1, width: '100%' }}>
+          <Typography variant="body2">
+            <strong>🦄</strong> - Starting point (Unicorn)
+          </Typography>
+          <Typography variant="body2">
+            <strong>🏰</strong> - Goal (Enchanted Castle)
+          </Typography>
+          <Typography variant="body2">
+            <strong>🌳</strong> - Obstacle (Trees)
+          </Typography>
+          <Typography variant="body2">
+            <strong>Empty space</strong> - Path the unicorn can travel
+          </Typography>
+        </Box>
+      </Box>
+    );
+  };
+
+  // Render standard visualization
+  const renderStandardVisualization = () => {
+    return (
+      <>
         {Object.keys(currentStepData.variables).length === 0 ? (
           <Typography variant="h6" color="text.secondary">
             Press play to start visualization
@@ -310,6 +457,26 @@ const ConceptVisualizer = ({ concept }) => {
         <InfoBox>
           {currentStepData.message}
         </InfoBox>
+      </>
+    );
+  };
+  
+  // If no visualization data is available
+  if (!concept) {
+    return (
+      <Typography color="text.secondary">
+        No visualization available for this concept.
+      </Typography>
+    );
+  }
+
+  return (
+    <VisualizerContainer>
+      <VisualCanvas sx={{ transform: `scale(${zoom})`, transition: 'transform 0.3s ease' }}>
+        {visualizationType === 'grid' 
+          ? renderGridVisualization() 
+          : renderStandardVisualization()
+        }
       </VisualCanvas>
       
       <ControlsContainer>
@@ -358,7 +525,10 @@ const ConceptVisualizer = ({ concept }) => {
       </ControlsContainer>
       
       <Typography variant="caption" color="text.secondary" sx={{ mt: 2, textAlign: 'center' }}>
-        Step {currentStep + 1} of {totalSteps} - {currentStepData.message}
+        {visualizationType === 'grid' 
+          ? `Step ${gridStep + 1} of ${gridSteps.length}`
+          : `Step ${currentStep + 1} of ${totalSteps} - ${currentStepData.message}`
+        }
       </Typography>
     </VisualizerContainer>
   );

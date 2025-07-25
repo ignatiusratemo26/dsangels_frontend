@@ -36,6 +36,7 @@ const Dashboard = () => {
         // Fetch recent badges
         const badges = await gamificationService.getUserBadges();
         setRecentBadges(badges.earned_badges.slice(0, 3));
+        console.log("recent badges : " , badges.earned_badges)
 
         // Fetch recommended challenges
         const challenges = await contentService.getChallenges({
@@ -184,11 +185,7 @@ const Dashboard = () => {
                 {recentBadges.map((badge) => (
                   <Grid item xs={12} key={badge.id}>
                     <AchievementCard
-                      id={badge.id}
-                      name={badge.name}
-                      description={badge.description}
-                      imageUrl={badge.image_url}
-                      pointsValue={badge.points_value}
+                      achievement={badge}
                     />
                   </Grid>
                 ))}

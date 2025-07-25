@@ -32,6 +32,9 @@ const RecommendedChallenges = ({ challenges, concepts }) => {
     setTabValue(newValue);
   };
 
+  // Set a fixed height for the scrollable content
+  const scrollableHeight = '350px';
+
   return (
     <Box>
       <Tabs 
@@ -65,102 +68,67 @@ const RecommendedChallenges = ({ challenges, concepts }) => {
 
       <TabPanel value={tabValue} index={0}>
         {challenges && challenges.length > 0 ? (
-          challenges.map((challenge) => (
-            <Box
-              key={challenge.id}
-              component={Link}
-              to={`/app/challenges/${challenge.id}`}
-              sx={{
-                display: 'block',
-                textDecoration: 'none',
-                mb: 2,
-                p: 2,
-                borderRadius: 2,
-                backgroundColor: theme.palette.background.paper,
-                transition: 'transform 0.2s',
+          <Box 
+            sx={{ 
+              height: scrollableHeight,
+              overflowY: 'auto',
+              // Customize scrollbar appearance
+              '&::-webkit-scrollbar': {
+                width: '8px',
+              },
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: theme.palette.background.default,
+                borderRadius: '4px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: theme.palette.divider,
+                borderRadius: '4px',
                 '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                  backgroundColor: theme.palette.action.hover,
                 },
-              }}
-            >
-              <Typography variant="h6" sx={{ color: theme.palette.primary.main }}>
-                {challenge.title}
-              </Typography>
-              <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
-                {challenge.problem_statement ? challenge.problem_statement.substring(0, 100) + "..." : "No description available"}
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
-                <Typography 
-                  variant="caption" 
-                  sx={{ 
-                    bgcolor: theme.palette.primary.light, 
-                    color: theme.palette.primary.contrastText,
-                    px: 1,
-                    py: 0.5,
-                    borderRadius: 1
-                  }}
-                >
-                  Difficulty: {challenge.difficulty_level}/5
+              },
+              // Add some padding to prevent content from touching the scrollbar
+              pr: 1
+            }}
+          >
+            {challenges.map((challenge) => (
+              <Box
+                key={challenge.id}
+                component={Link}
+                to={`/app/challenges/${challenge.id}`}
+                sx={{
+                  display: 'block',
+                  textDecoration: 'none',
+                  mb: 2,
+                  p: 2,
+                  borderRadius: 2,
+                  backgroundColor: theme.palette.background.paper,
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                  },
+                }}
+              >
+                <Typography variant="h6" sx={{ color: theme.palette.primary.main }}>
+                  {challenge.title}
                 </Typography>
-                <Typography 
-                  variant="caption" 
-                  sx={{ 
-                    bgcolor: theme.palette.secondary.light, 
-                    color: theme.palette.secondary.contrastText,
-                    px: 1,
-                    py: 0.5,
-                    borderRadius: 1
-                  }}
-                >
-                  {challenge.points} points
+                <Typography variant="body2" color="text.secondary" sx={{ mb: 1 }}>
+                  {challenge.problem_statement ? challenge.problem_statement.substring(0, 100) + "..." : "No description available"}
                 </Typography>
-              </Box>
-            </Box>
-          ))
-        ) : (
-          <Box sx={{ textAlign: 'center', py: 3 }}>
-            <Typography color="text.secondary">No challenges found</Typography>
-          </Box>
-        )}
-      </TabPanel>
-
-      <TabPanel value={tabValue} index={1}>
-        {concepts && concepts.length > 0 ? (
-          concepts.map((concept) => (
-            <Box
-              key={concept.id}
-              component={Link}
-              to={`/app/learning/${concept.id}`}
-              sx={{
-                display: 'block',
-                textDecoration: 'none',
-                mb: 2,
-                p: 2,
-                borderRadius: 2,
-                backgroundColor: theme.palette.background.paper,
-                transition: 'transform 0.2s',
-                '&:hover': {
-                  transform: 'translateY(-4px)',
-                  boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
-                },
-              }}
-            >
-              <Typography variant="h6" sx={{ color: theme.palette.primary.main }}>
-                {concept.title}
-              </Typography>
-              <Typography variant="body2" sx={{ color: theme.palette.info.main, mb: 1 }}>
-                {concept.concept}
-              </Typography>
-              <Typography variant="body2" color="text.secondary">
-              {/* {concept.content ? concept.content.substring(0, 120) + "..." : "No content available"} */}
-              {concept.theme_description || concept.explanation || "No content available"}
-              </Typography>
-              <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
-                <Typography variant="caption" sx={{ color: theme.palette.text.secondary }}>
-                  Reading level: {concept.reading_level}
-                </Typography>
-                {concept.themed_explanation && (
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', mt: 1 }}>
+                  <Typography 
+                    variant="caption" 
+                    sx={{ 
+                      bgcolor: theme.palette.primary.light, 
+                      color: theme.palette.primary.contrastText,
+                      px: 1,
+                      py: 0.5,
+                      borderRadius: 1
+                    }}
+                  >
+                    Difficulty: {challenge.difficulty_level}/5
+                  </Typography>
                   <Typography 
                     variant="caption" 
                     sx={{ 
@@ -171,12 +139,94 @@ const RecommendedChallenges = ({ challenges, concepts }) => {
                       borderRadius: 1
                     }}
                   >
-                    Themed: {concept.theme}
+                    {challenge.points} points
                   </Typography>
-                )}
+                </Box>
               </Box>
-            </Box>
-          ))
+            ))}
+          </Box>
+        ) : (
+          <Box sx={{ textAlign: 'center', py: 3 }}>
+            <Typography color="text.secondary">No challenges found</Typography>
+          </Box>
+        )}
+      </TabPanel>
+
+      <TabPanel value={tabValue} index={1}>
+        {concepts && concepts.length > 0 ? (
+          <Box 
+            sx={{ 
+              height: scrollableHeight,
+              overflowY: 'auto',
+              // Customize scrollbar appearance
+              '&::-webkit-scrollbar': {
+                width: '8px',
+              },
+              '&::-webkit-scrollbar-track': {
+                backgroundColor: theme.palette.background.default,
+                borderRadius: '4px',
+              },
+              '&::-webkit-scrollbar-thumb': {
+                backgroundColor: theme.palette.divider,
+                borderRadius: '4px',
+                '&:hover': {
+                  backgroundColor: theme.palette.action.hover,
+                },
+              },
+              // Add some padding to prevent content from touching the scrollbar
+              pr: 1
+            }}
+          >
+            {concepts.map((concept) => (
+              <Box
+                key={concept.id}
+                component={Link}
+                to={`/app/learning/${concept.id}`}
+                sx={{
+                  display: 'block',
+                  textDecoration: 'none',
+                  mb: 2,
+                  p: 2,
+                  borderRadius: 2,
+                  backgroundColor: theme.palette.background.paper,
+                  transition: 'transform 0.2s',
+                  '&:hover': {
+                    transform: 'translateY(-4px)',
+                    boxShadow: '0 4px 10px rgba(0,0,0,0.1)',
+                  },
+                }}
+              >
+                <Typography variant="h6" sx={{ color: theme.palette.primary.main }}>
+                  {concept.title}
+                </Typography>
+                <Typography variant="body2" sx={{ color: theme.palette.info.main, mb: 1 }}>
+                  {concept.concept}
+                </Typography>
+                <Typography variant="body2" color="text.secondary">
+                {concept.theme_description || concept.explanation || "No content available"}
+                </Typography>
+                <Box sx={{ display: 'flex', justifyContent: 'space-between', mt: 1 }}>
+                  <Typography variant="caption" sx={{ color: theme.palette.text.secondary }}>
+                    Reading level: {concept.reading_level}
+                  </Typography>
+                  {concept.themed_explanation && (
+                    <Typography 
+                      variant="caption" 
+                      sx={{ 
+                        bgcolor: theme.palette.secondary.light, 
+                        color: theme.palette.secondary.contrastText,
+                        px: 1,
+                        py: 0.5,
+                        borderRadius: 1
+                      }}
+                    >
+                      Themed: {concept.theme}
+                    </Typography>
+                  )}
+                </Box>
+              </Box>
+            ))}
+          </Box>
         ) : (
           <Box sx={{ textAlign: 'center', py: 3 }}>
             <Typography color="text.secondary">No concept notes found</Typography>

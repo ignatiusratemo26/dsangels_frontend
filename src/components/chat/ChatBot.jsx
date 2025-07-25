@@ -1,4 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
+import ReactMarkdown from 'react-markdown';
+
 import { 
   Box, 
   Paper, 
@@ -277,9 +279,24 @@ const ChatBot = ({ isSidebar = false }) => {
               
               <Box sx={{ maxWidth: '75%' }}>
                 <MessageBubble isuser={msg.isUser ? 1 : 0}>
-                  <Typography variant="body1">
-                    {msg.text}
-                  </Typography>
+                <Box sx={{ 
+                  '& p': { m: 0 }, 
+                  '& strong': { fontWeight: 'bold' },
+                  '& ul, & ol': { pl: 2, mb: 0, mt: 0.5 },
+                  '& li': { mb: 0.5 },
+                  '& code': {
+                    backgroundColor: 'rgba(0, 0, 0, 0.04)',
+                    padding: '2px 4px',
+                    borderRadius: 1,
+                    fontFamily: 'monospace'
+                  },
+                  '& a': {
+                    color: msg.isUser ? 'inherit' : 'secondary.main',
+                    textDecoration: 'underline'
+                  }
+                }}>
+                  <ReactMarkdown>{msg.text}</ReactMarkdown>
+                </Box>
                   <Typography variant="caption" sx={{ 
                     display: 'block', 
                     textAlign: 'right',

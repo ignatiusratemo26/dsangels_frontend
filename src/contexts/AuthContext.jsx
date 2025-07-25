@@ -6,6 +6,7 @@ const AuthContext = createContext(null);
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
+  const [userType, setUserType] = useState(null); 
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -21,6 +22,14 @@ export const AuthProvider = ({ children }) => {
           // Get user profile with token
           const userData = await AuthService.getUserProfile();
           setUser(userData);
+
+          if (userData.parent_profile) {
+            setUserType('parent');
+          } else if (userData.mentor_profile) {
+            setUserType('mentor');
+          } else {
+            setUserType('student');
+          }
         } catch (err) {
           // If access token expired, try to refresh
           if (refreshToken) {
@@ -66,6 +75,15 @@ export const AuthProvider = ({ children }) => {
       
       const userData = response.user || await AuthService.getUserProfile();
       setUser(userData);
+
+      // Determine user type
+      if (userData.parent_profile) {
+        setUserType('parent');
+      } else if (userData.mentor_profile) {
+        setUserType('mentor');
+      } else {
+        setUserType('student');
+      }
       
       return userData;
     } catch (err) {
@@ -166,6 +184,7 @@ export const AuthProvider = ({ children }) => {
   return (
     <AuthContext.Provider value={{
       user,
+      userType,
       loading,
       error,
       login,
@@ -176,6 +195,9 @@ export const AuthProvider = ({ children }) => {
       updateProfile,
       changePassword,
       isAuthenticated: !!user,
+      isParent: userType === 'parent',     // Helper properties
+      isMentor: userType === 'mentor',     // for easy checks
+      isStudent: userType === 'student',
     }}>
       {children}
     </AuthContext.Provider>

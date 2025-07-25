@@ -157,6 +157,7 @@ const BadgesPage = () => {
   
   const calculateLevelProgress = () => {
     // Example logic - replace with your actual level calculation
+    console.log("stats: ", stats)
     const currentPoints = stats.points;
     const pointsForCurrentLevel = 1000 * (stats.level - 1);
     const pointsForNextLevel = 1000 * stats.level;
